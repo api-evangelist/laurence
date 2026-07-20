@@ -1,0 +1,62 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://www.laurence.com/.well-known/openid-configuration,
+  https://www.laurence.com/.well-known/oauth-authorization-server,
+  https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource,
+  https://www.laurence.com/blog/laurence-mcp-launch
+docs: https://www.laurence.com/blog/laurence-mcp-launch
+description: >-
+  Laurence's only publicly documented programmatic surface is its hosted MCP server, which is an
+  OAuth 2.0 protected resource. The authorization server is www.laurence.com; the protected resource
+  is the MCP endpoint on modal.run. The flow is authorization code with PKCE (S256 only) and
+  supports OAuth 2.0 Dynamic Client Registration — token_endpoint_auth_methods_supported is "none",
+  i.e. public clients only, which is what lets an IDE register itself and complete a browser sign-in
+  without any pre-issued credential. There is no documented API-key or HTTP-basic surface, and no
+  general-purpose REST API is published.
+schemes:
+  - name: laurence_mcp_oauth
+    type: oauth2
+    flow: authorizationCode
+    issuer: https://www.laurence.com
+    authorization_url: https://www.laurence.com/api/mcp/oauth/authorize
+    token_url: https://www.laurence.com/api/mcp/oauth/token
+    registration_url: https://www.laurence.com/api/mcp/oauth/register
+    jwks_uri: https://www.laurence.com/.well-known/jwks.json
+    jwks_status: 503
+    pkce:
+      required: true
+      code_challenge_methods:
+        - S256
+    grant_types:
+      - authorization_code
+      - refresh_token
+    response_types:
+      - code
+    token_endpoint_auth_methods:
+      - none
+    client_registration: dynamic
+    subject_types:
+      - public
+    bearer_methods:
+      - header
+    scopes:
+      - openid
+      - profile
+      - email
+      - laurence:mcp
+    applies_to:
+      - https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+authorization_model:
+  tenancy: >-
+    Every tool call is scoped to the Amazon Ads profiles the signed-in user belongs to. Callers pass
+    a profile_id and the server returns only data that user is permitted to see.
+  discovery_tool: list_allowed_ads_profiles
+  access: Laurence customers only
+  read_only: true
+observed:
+  probed: '2026-07-19'
+  unauthenticated_request_status: 401
+  challenge: >-
+    WWW-Authenticate: Bearer error="invalid_token", error_description="Authentication required",
+    resource_metadata="https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource/mcp"
