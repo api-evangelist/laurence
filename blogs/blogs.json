@@ -1,0 +1,28 @@
+{
+  "repo": "laurence",
+  "feeds": [
+    {
+      "source": "https://www.laurence.com/how-it-works",
+      "feed_url": "https://www.laurence.com/how-it-works",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.laurence.com/blog/feed.xml",
+      "feed_url": "https://www.laurence.com/blog/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.laurence.com/blog",
+      "feed_url": "https://www.laurence.com/blog/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 4,
+  "fetched": "2026-07-25T15:00:33Z"
+}

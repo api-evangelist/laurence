@@ -1,0 +1,85 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://www.laurence.com/blog/laurence-mcp-launch
+description: >-
+  Laurence operates an official hosted, remote MCP server that brings a customer's Amazon Advertising
+  and Amazon Marketing Stream (AMS) data into Claude Code, Cursor, and Codex. The server is available
+  to Laurence customers and is an OAuth 2.0 protected resource (RFC 9728): an unauthenticated
+  initialize or tools/list call returns HTTP 401 with a WWW-Authenticate Bearer challenge pointing at
+  the protected-resource metadata document. Tools are read-only and backed by Amazon Ads APIs plus
+  pre-stored AMS data in ClickHouse. Every tool call is scoped to the Amazon Ads profiles the
+  signed-in user belongs to — callers pass a profile_id and the server returns only permitted data.
+  The tool list below was transcribed verbatim from the launch post's Tools table; it could NOT be
+  confirmed against a live tools/list response because the endpoint requires OAuth (see
+  verification below).
+server:
+  name: laurence
+  transport: http
+  url: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+  auth: oauth2
+  protected_resource: well-known/laurence-oauth-protected-resource.json
+  authorization_server: https://www.laurence.com
+  scope: laurence:mcp
+  read_only: true
+  availability: Laurence customers only
+verification:
+  probed: '2026-07-19'
+  initialize_status: 401
+  tools_list_status: 401
+  www_authenticate: >-
+    Bearer error="invalid_token", error_description="Authentication required",
+    resource_metadata="https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource/mcp"
+  tools_verified_live: false
+  tools_source: https://www.laurence.com/blog/laurence-mcp-launch
+install:
+  - client: claude-code
+    command: >-
+      claude mcp add --transport http laurence
+      https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+  - client: codex
+    command: >-
+      codex mcp add laurence --url
+      https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+  - client: cursor
+    config: >-
+      {"laurence":{"command":"npx","args":["-y","mcp-remote","https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp"]}}
+tools:
+  - name: list_allowed_ads_profiles
+    description: >-
+      Every Amazon Ads profile_id you may query (call first). Every other tool expects a profile_id
+      from this list.
+  - name: get_daily_sales
+    description: Daily units and revenue by profile; optional ASIN filter.
+  - name: get_campaigns
+    description: Campaigns for a profile (SP, SB, SD).
+  - name: get_ad_groups
+    description: Ad groups for a campaign.
+  - name: get_campaign_keywords
+    description: Keywords and bids for campaign IDs.
+  - name: get_campaign_negative_keywords
+    description: Negative keywords for ad group IDs.
+  - name: get_bids_and_observations
+    description: >-
+      Bid updates with the same-hour performance snapshot (metrics when present). Optional
+      keyword_id, campaign_ids, Pacific date bounds, and row limit.
+  - name: get_ams_events
+    description: >-
+      Sponsored Products stream metrics (Pacific). Pick granularity via interval (daily rollups per
+      Pacific day, or hourly raw rows capped by limit). Optional match_type, placement, keyword_id,
+      and campaign_ids.
+  - name: get_search_term_data
+    description: >-
+      Search term report (queries and attributed performance). Optional keyword_id, campaign_ids,
+      and limit.
+notes:
+  - >-
+    Laurence positions this server as complementary to Amazon's own Ads MCP Server (launched
+    February 2026, 50+ tools), which does not cover Amazon Marketing Stream — the hourly event
+    firehose of impressions, clicks, cost, conversions, and placements at keyword granularity.
+  - >-
+    Queries are served from pre-stored ClickHouse data rather than on-demand Amazon report
+    generation; Laurence claims responses over 5x faster than Amazon report generation and polling.
+  - >-
+    Authentication is a browser-based OAuth sign-in on first tool invocation; sessions persist in
+    the IDE afterward with no manual token wiring.

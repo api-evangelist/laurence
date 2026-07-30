@@ -1,0 +1,31 @@
+# Laurence
+
+> The only platform that automates Amazon management for brands, engineered to maximize profits after margin and ad spend. Built by engineers, quants, and researchers from Google, Meta, and top quantitative hedge funds. Laurence advertises like modern hedge funds trade markets, driving a 15-40% improvement in net profit for Amazon brands within a month of onboarding.
+
+## Product
+
+- [How Laurence Works](https://www.laurence.com/how): The math behind hierarchical Bayesian bid optimization — how Laurence shares statistical strength across keywords, products, and stores to maximise contribution margin rather than rules-of-thumb ACOS targets.
+- [Why Laurence](https://www.laurence.com/why): Why rule-based PPC tools and offshore-agency playbooks break at scale, and why a quantitative system delivers structurally different results.
+
+## Case Studies
+
+- [Quadrupling a household brand's sales in five months — at ~14% TACoS](https://www.laurence.com/case-studies/household-supplies-brand): A scaling-stage household-essentials brand had the demand to grow but no way to know how hard it could safely push. Laurence found the profitable headroom and kept finding it — quadrupling total store revenue over five months while holding TACoS near 14%.
+- [Reversing a four-month sales decline in two weeks](https://www.laurence.com/case-studies/cleaning-repairs-brand): An established cleaning & repair brand had watched sales fall for four months straight, dragging organic rank down with them. Laurence reversed the decline in two weeks — +50% total sales under 15% TACoS — by finding thousands of untargeted keywords and pricing each one.
+- [Lifting ROAS from 2.2× to 5.8× while sales doubled](https://www.laurence.com/case-studies/photo-video-supplies-brand): A photo & video gear brand was being outspent in a saturated category. Laurence cut waste on unwinnable head terms and expanded coverage from 30 to 407 keywords — lifting ROAS from 2.2× to 5.8× while doubling sales, all under 20% TACoS.
+- [Skyrocketing Naturealm's BSR in a saturated category](https://www.laurence.com/case-studies/naturealm-sacred-7): Sacred 7's Best Seller Rank had been stalling between #40 and #50 for months. Laurence's bid exploration found the cheap converting auctions competitors ignore, and eight weeks of intelligent bidding built around Prime Day took the product to #12, much closer to its fair share of the category.
+
+## Blog
+
+- [Laurence raises $5.8 million to automate performance marketing](https://www.laurence.com/blog/laurence-seed-fundraise) (2026-06-03, by Matthew Chen): Seed round led by Susa Ventures and Box Group, with participation from Y Combinator and more.
+- [Ask Laurence is now available: schedulable, multiplayer conversations grounded in your Amazon Ads and Seller Central data](https://www.laurence.com/blog/ask-laurence-launch) (2026-04-23, by Justin Xiang): Ask Laurence is now generally available on the Laurence platform. Every answer is grounded in the live Amazon Advertising and Seller Central data Laurence already manages for your account — the same tables that power your daily report and your bidding pipeline — plus multiplayer threads, parallel streams, image uploads, and scheduled Automations.
+- [Our knowledge flywheel: how Laurence remembers and learns from every campaign decision](https://www.laurence.com/blog/laurence-knowledge-flywheel) (2026-04-17, by Justin Xiang): An Obsidian wiki, a Claude Code ingest agent, and a daily diagnosis pipeline that reads the wiki every morning. How we built an internal compounding knowledge layer so Laurence gets smarter with every campaign change.
+- [Laurence MCP: Amazon Ads data in Claude Code, Cursor, and Codex](https://www.laurence.com/blog/laurence-mcp-launch) (2026-04-16, by Justin Xiang): Bring your Amazon Ads data into Claude Code, Cursor, or Codex. Ask natural-language questions, pull campaigns and metrics, and reason over bids and search terms.
+
+## Team
+
+- [Team](https://www.laurence.com/team): Engineers from Google, Meta, and Jump Trading; founders Matthew Chen (CEO) and Leo Gierhake (CTO).
+
+## Reference
+
+- [Sitemap](https://www.laurence.com/sitemap.xml): Machine-readable URL inventory with per-URL lastmod and priority.
+- [Atom Feed](https://www.laurence.com/blog/feed.xml): Real-time blog post feed (Atom 1.0).

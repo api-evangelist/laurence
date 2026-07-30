@@ -1,0 +1,115 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://www.laurence.com/.well-known/openid-configuration,
+  https://www.laurence.com/.well-known/oauth-authorization-server,
+  https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource,
+  https://www.laurence.com/blog/laurence-mcp-launch, live probes 2026-07-19
+description: >-
+  Standards conformance for Laurence. Laurence publishes no REST API and no OpenAPI, so the
+  assessable surface is its OAuth-protected MCP server plus the discovery documents on
+  www.laurence.com. Conformance below is asserted only where a discovery document or a live probe
+  provides evidence; everything else is recorded as not-conformant or not-applicable rather than
+  assumed.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      www.laurence.com publishes /.well-known/oauth-authorization-server with authorization, token
+      and registration endpoints; the MCP server rejects unauthenticated calls with HTTP 401 and a
+      WWW-Authenticate Bearer challenge.
+  - id: oauth2-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported is ["S256"] — PKCE with SHA-256, and no "plain".
+  - id: rfc9728-protected-resource-metadata
+    conforms: true
+    evidence: >-
+      The MCP host serves /.well-known/oauth-protected-resource declaring resource,
+      authorization_servers, scopes_supported (laurence:mcp) and bearer_methods_supported; the 401
+      challenge carries a resource_metadata parameter pointing at it.
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: >-
+      registration_endpoint https://www.laurence.com/api/mcp/oauth/register is advertised, and
+      token_endpoint_auth_methods_supported is ["none"], enabling public-client self-registration
+      from an IDE.
+  - id: oidc
+    conforms: partial
+    evidence: >-
+      /.well-known/openid-configuration is served and advertises openid/profile/email scopes and
+      public subject types, but the document is byte-identical to the OAuth authorization-server
+      metadata, omits required OIDC fields such as id_token_signing_alg_values_supported and
+      userinfo_endpoint, and the advertised jwks_uri returns HTTP 503
+      ("key is not a public key"), so ID-token signature verification cannot be performed.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Official hosted remote MCP server over HTTP transport at
+      laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp, documented with Claude Code,
+      Cursor and Codex install paths; nine read-only tools.
+  - id: tls
+    conforms: true
+    evidence: TLSv1.3 on both www.laurence.com and the MCP host (probed 2026-07-19).
+  - id: hsts
+    conforms: partial
+    evidence: >-
+      www.laurence.com sends HSTS with max-age=63072000; the modal.run MCP host sends no HSTS
+      header.
+  - id: dnssec
+    conforms: false
+    evidence: laurence.com is not DNSSEC-signed (probed 2026-07-19).
+  - id: caa
+    conforms: false
+    evidence: No CAA records published for laurence.com.
+  - id: spf
+    conforms: true
+    evidence: laurence.com publishes an SPF record.
+  - id: dmarc
+    conforms: false
+    evidence: No DMARC record published for laurence.com.
+  - id: security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns HTTP 404 on www.laurence.com.
+  - id: llms-txt
+    conforms: true
+    evidence: >-
+      www.laurence.com/llms.txt returns a well-formed llms.txt (text/markdown) with H2-sectioned
+      product, case study, blog, team and reference links.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No problem+json surface observed; MCP auth errors use the OAuth error shape
+      {"error":"invalid_token","error_description":...}.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      Not applicable in practice — the published tool surface is entirely read-only, so no
+      idempotency key mechanism is documented or needed.
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      Several MCP tools accept a row "limit" parameter (get_bids_and_observations, get_ams_events,
+      get_search_term_data), but no cursor, offset or next-page token is documented.
+  - id: fhir
+    conforms: false
+    evidence: Not applicable — advertising/e-commerce domain.
+  - id: fapi
+    conforms: false
+    evidence: Not applicable — no financial-grade API surface.
+  - id: scim
+    conforms: false
+    evidence: No SCIM provisioning surface published.
+  - id: odata
+    conforms: false
+    evidence: No OData surface published.
+  - id: psd2
+    conforms: false
+    evidence: Not applicable — not a payments provider.
+  - id: json-api
+    conforms: false
+    evidence: No JSON:API surface published.
+compliance_certifications:
+  published: false
+  evidence: >-
+    No trust center, SOC 2, ISO 27001, PCI, HIPAA or FedRAMP claim found on laurence.com as of
+    2026-07-19 (probe-security-programs.py returned trust=none).

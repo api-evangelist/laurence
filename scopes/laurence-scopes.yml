@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://www.laurence.com/.well-known/openid-configuration,
+  https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource
+docs: https://www.laurence.com/blog/laurence-mcp-launch
+description: >-
+  OAuth scopes advertised by Laurence's authorization-server discovery document. Laurence does not
+  publish a dedicated scopes/permissions reference page; the scope set below is taken verbatim from
+  scopes_supported in the discovery metadata. Three are the standard OpenID Connect scopes; one
+  vendor scope, laurence:mcp, gates the MCP server and is the only scope echoed by the MCP
+  protected-resource metadata. Scopes are coarse-grained — authorization is enforced per Amazon Ads
+  profile at call time rather than by finer-grained scopes.
+issuer: https://www.laurence.com
+resource: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+scopes:
+  - name: openid
+    standard: oidc
+    description: Standard OpenID Connect scope requesting an ID token for the signed-in Laurence user.
+  - name: profile
+    standard: oidc
+    description: Standard OpenID Connect scope granting access to basic profile claims.
+  - name: email
+    standard: oidc
+    description: Standard OpenID Connect scope granting access to the user's email address claim.
+  - name: laurence:mcp
+    standard: vendor
+    description: >-
+      Grants a registered client read-only access to the Laurence MCP server's nine tools over the
+      Amazon Advertising and Amazon Marketing Stream data for the Ads profiles the signed-in user
+      belongs to. This is the only scope listed in scopes_supported on the MCP protected-resource
+      metadata.
+    resource: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+notes:
+  - No scope-to-tool mapping is published; laurence:mcp appears to gate the whole tool surface.
+  - >-
+    Per-record authorization is enforced by Amazon Ads profile membership, discoverable at runtime
+    via the list_allowed_ads_profiles tool, not through scopes.

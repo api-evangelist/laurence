@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface for every base host in apis.yml. Status is
+  the HTTP code observed at fetch time on 2026-07-19. laurence.com 308-redirects to www.laurence.com;
+  both serve identical documents. Only documents returning a real, correctly-typed payload were
+  saved. Notably, laurence.com publishes OAuth 2.0 authorization-server and OpenID Connect discovery
+  metadata for its MCP server, and the MCP host itself publishes RFC 9728 protected-resource
+  metadata. /.well-known/jwks.json is advertised by the discovery document but currently returns
+  HTTP 503 with an error body, so it was not saved.
+hosts:
+  - host: https://www.laurence.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: laurence-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        type: application/json
+        file: laurence-oauth-authorization-server.json
+      - path: /.well-known/jwks.json
+        status: 503
+        note: >-
+          Advertised as jwks_uri by the discovery documents but returns
+          {"error":"server_error","error_description":"key is not a public key"}. Not saved.
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 200
+        type: text/markdown
+        file: ../llms/laurence-llms.txt
+  - host: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        type: application/json
+        file: laurence-oauth-protected-resource.json
+      - path: /.well-known/oauth-authorization-server
+        status: 404

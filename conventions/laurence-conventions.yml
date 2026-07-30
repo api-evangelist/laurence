@@ -1,0 +1,109 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://www.laurence.com/blog/laurence-mcp-launch,
+  https://www.laurence.com/.well-known/openid-configuration,
+  https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource
+docs: https://www.laurence.com/blog/laurence-mcp-launch
+description: >-
+  Cross-cutting runtime semantics for Laurence's published surface. Laurence ships no REST API and
+  no OpenAPI; the only programmatic contract is the hosted MCP server, so these conventions describe
+  MCP tool-call semantics rather than HTTP resource semantics. Only conventions with published
+  evidence are recorded — where Laurence documents nothing (versioning, deprecation, rate limits,
+  error envelope beyond the OAuth error shape), that is stated as undocumented rather than guessed.
+auth:
+  style: oauth2-bearer
+  detail: >-
+    Browser-based OAuth 2.0 authorization-code sign-in with PKCE (S256) on first tool invocation;
+    the bearer token is sent in the Authorization header. Public clients self-register via dynamic
+    client registration, so no token is wired by hand. Sessions persist in the IDE afterward.
+  scope: laurence:mcp
+  cross_ref: authentication/laurence-authentication.yml
+tenancy:
+  model: per-amazon-ads-profile
+  parameter: profile_id
+  detail: >-
+    Every tool except list_allowed_ads_profiles requires a profile_id. The server returns only data
+    for Amazon Ads profiles the signed-in user belongs to; authorization is enforced per call, not
+    by scope.
+  discovery: >-
+    Call list_allowed_ads_profiles first to learn which profile_id values are valid for the
+    authenticated user.
+mutability:
+  read_only: true
+  detail: >-
+    All nine published tools are read-only reads over Amazon Ads APIs and pre-stored Amazon
+    Marketing Stream data in ClickHouse. No write, mutation, or campaign-management tool is
+    published.
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency key mechanism is documented. Not required by the current surface, which is
+    entirely read-only.
+pagination:
+  style: row-limit
+  parameters:
+    - limit
+  detail: >-
+    get_bids_and_observations, get_ams_events and get_search_term_data accept a row limit. No
+    cursor, offset, or next-page token is documented, so large result sets are truncated by limit
+    rather than paged.
+filtering:
+  common_parameters:
+    - name: profile_id
+      applies_to: all tools except list_allowed_ads_profiles
+    - name: campaign_ids
+      applies_to: get_bids_and_observations, get_ams_events, get_search_term_data
+    - name: keyword_id
+      applies_to: get_bids_and_observations, get_ams_events, get_search_term_data
+    - name: match_type
+      applies_to: get_ams_events
+    - name: placement
+      applies_to: get_ams_events
+    - name: asin
+      applies_to: get_daily_sales
+    - name: interval
+      applies_to: get_ams_events
+      detail: Selects granularity — daily rollups per Pacific day, or hourly raw rows capped by limit.
+time:
+  timezone: America/Los_Angeles
+  detail: >-
+    Date bounds and rollups are expressed in Pacific time. get_bids_and_observations accepts Pacific
+    date bounds; get_ams_events rolls up per Pacific day.
+  granularity:
+    - hourly
+    - daily
+data_freshness:
+  detail: >-
+    Backed by pre-stored Amazon Marketing Stream data in ClickHouse rather than on-demand Amazon
+    report generation. Laurence claims responses over 5x faster than Amazon Ads report generation
+    and polling cycles, returning in seconds rather than minutes.
+errors:
+  envelope: oauth2-error
+  detail: >-
+    Authentication failures return HTTP 401 with an OAuth error object
+    {"error":"invalid_token","error_description":"Authentication required"} plus a WWW-Authenticate
+    Bearer challenge carrying resource_metadata. Tool-level error semantics are not documented, and
+    no RFC 9457 problem+json surface was observed.
+versioning:
+  documented: false
+  detail: >-
+    No API version, version header, or versioning policy is published for the MCP server. MCP
+    protocol version is negotiated by the initialize handshake.
+deprecation:
+  documented: false
+  detail: No deprecation or Sunset policy is published.
+rate_limits:
+  documented: false
+  detail: No rate limits are published for the MCP server.
+status_page:
+  published: false
+  detail: No status page found at /status or on a third-party status host as of 2026-07-19.
+request_tracing:
+  documented: false
+  detail: No request-id or correlation-id convention is documented.
+cross_references:
+  authentication: authentication/laurence-authentication.yml
+  scopes: scopes/laurence-scopes.yml
+  conformance: conformance/laurence-conformance.yml
+  mcp: mcp/laurence-mcp.yml
