@@ -1,0 +1,96 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live probes of https://mcp.laurence.com/mcp and
+  https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp on 2026-08-13;
+  https://www.laurence.com/.well-known/jwks.json
+format: oauth2-error
+description: >-
+  Laurence publishes no error reference and no OpenAPI, so there are no declared 4xx/5xx responses to
+  derive from. This catalog contains ONLY responses actually observed on live unauthenticated probes.
+  It is deliberately short: it is a record of what an agent will really see at the door, not a guess
+  at what lies behind it. Tool-level error semantics — what get_ams_events returns for a bad
+  profile_id, an out-of-range date, or an unknown campaign_id — are entirely undocumented and could
+  not be observed, because every call is OAuth-gated. Those are recorded below as unknown rather
+  than invented. The envelope is the OAuth 2.0 error object (RFC 6749 §5.2 / RFC 6750), not RFC 9457
+  problem+json; no application/problem+json surface exists.
+envelope:
+  media_type: application/json
+  shape: '{"error": "<code>", "error_description": "<human readable>"}'
+  standard: RFC 6749 section 5.2 / RFC 6750 bearer-token error responses
+  rfc9457: false
+  detail: >-
+    Errors carry no type URI, no title/detail/instance members, and no machine-readable error code
+    beyond the OAuth error family. There is no request-id or correlation field in the body.
+problems:
+  - status: 401
+    error: invalid_token
+    title: Authentication required
+    body: '{"error": "invalid_token", "error_description": "Authentication required"}'
+    www_authenticate: >-
+      Bearer error="invalid_token", error_description="Authentication required",
+      resource_metadata="https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp"
+    remediation: >-
+      Complete the OAuth 2.0 authorization-code + PKCE (S256) flow against
+      https://www.laurence.com, requesting scope laurence:mcp, and resend the request with the
+      access token in the Authorization header. Public clients self-register at
+      https://www.laurence.com/api/mcp/oauth/register. The resource_metadata parameter on the
+      challenge is the RFC 9728 discovery pointer an MCP client should follow automatically.
+    observed_on:
+      - method: POST
+        url: https://mcp.laurence.com/mcp
+        rpc_method: tools/list
+      - method: POST
+        url: https://mcp.laurence.com/mcp
+        rpc_method: initialize
+      - method: POST
+        url: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+        rpc_method: tools/list
+    note: >-
+      Returned as an HTTP-level error before the JSON-RPC layer — the body is an OAuth error object,
+      not a JSON-RPC error envelope with an id and a numeric code.
+  - status: 404
+    error: null
+    title: Not Found
+    body: 'Not Found'
+    media_type: text/plain
+    remediation: >-
+      Only the /mcp path and the /.well-known/oauth-protected-resource documents are served on the
+      MCP host. The host root, /openapi.json and the agent-card paths all return this bare
+      text/plain 404.
+    observed_on:
+      - method: GET
+        url: https://mcp.laurence.com/
+      - method: GET
+        url: https://mcp.laurence.com/openapi.json
+      - method: GET
+        url: https://mcp.laurence.com/.well-known/agent-card.json
+  - status: 503
+    error: server_error
+    title: Key is not a public key
+    body: '{"error":"server_error","error_description":"key is not a public key"}'
+    host: https://www.laurence.com
+    path: /.well-known/jwks.json
+    remediation: >-
+      Provider-side defect. The jwks_uri advertised by both the OAuth authorization-server metadata
+      and the OpenID Connect discovery document does not serve a JWKS, so a client cannot verify
+      ID-token signatures. Observed in the same state on 2026-07-19 and 2026-08-13 — persistent, not
+      a transient outage. Nothing a caller can do; this needs a fix from Laurence.
+    severity: defect
+unknown:
+  - area: tool-level errors
+    detail: >-
+      No documentation and no observable surface for invalid profile_id, unauthorized profile,
+      malformed date bounds, unknown campaign_ids, or limit-exceeded conditions on any of the nine
+      tools. An authenticated session would be required to catalogue these.
+  - area: JSON-RPC error codes
+    detail: >-
+      No JSON-RPC error object was ever returned during probing, so the server's use of the standard
+      MCP/JSON-RPC code space (-32700 … -32603, and any server-defined range) is unknown.
+  - area: rate-limit errors
+    detail: No 429 or Retry-After behavior documented or observed. See rate-limits/laurence-rate-limits.yml.
+cross_references:
+  authentication: authentication/laurence-authentication.yml
+  conventions: conventions/laurence-conventions.yml
+  rate_limits: rate-limits/laurence-rate-limits.yml
+checked: '2026-08-13'

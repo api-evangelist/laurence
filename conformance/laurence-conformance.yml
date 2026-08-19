@@ -1,10 +1,10 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
 source: >-
   https://www.laurence.com/.well-known/openid-configuration,
   https://www.laurence.com/.well-known/oauth-authorization-server,
   https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource,
-  https://www.laurence.com/blog/laurence-mcp-launch, live probes 2026-07-19
+  https://www.laurence.com/blog/laurence-mcp-launch, live probes 2026-08-13
 description: >-
   Standards conformance for Laurence. Laurence publishes no REST API and no OpenAPI, so the
   assessable surface is its OAuth-protected MCP server plus the discovery documents on
@@ -26,7 +26,9 @@ standards:
     evidence: >-
       The MCP host serves /.well-known/oauth-protected-resource declaring resource,
       authorization_servers, scopes_supported (laurence:mcp) and bearer_methods_supported; the 401
-      challenge carries a resource_metadata parameter pointing at it.
+      challenge carries a resource_metadata parameter pointing at it. Re-probed 2026-08-13 on both
+      mcp.laurence.com and the modal.run host — identical documents, both now declaring resource
+      https://mcp.laurence.com/mcp.
   - id: rfc7591-dynamic-client-registration
     conforms: true
     evidence: >-
@@ -49,15 +51,28 @@ standards:
       Cursor and Codex install paths; nine read-only tools.
   - id: tls
     conforms: true
-    evidence: TLSv1.3 on both www.laurence.com and the MCP host (probed 2026-07-19).
+    evidence: TLSv1.3 on both www.laurence.com and the MCP host (probed 2026-08-13).
+  - id: a2a-agent-card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json return 404 on www.laurence.com,
+      mcp.laurence.com and the modal.run host (probed 2026-08-13). No A2A agent card is published.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns HTTP 404 on www.laurence.com (probed 2026-08-13).
+  - id: rfc8594-sunset-deprecation
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation header support and no deprecation policy. The MCP resource host was
+      changed without any deprecation signal — see lifecycle/laurence-lifecycle.yml.
   - id: hsts
     conforms: partial
     evidence: >-
-      www.laurence.com sends HSTS with max-age=63072000; the modal.run MCP host sends no HSTS
-      header.
+      www.laurence.com sends HSTS with max-age=63072000; the MCP host mcp.laurence.com sends no HSTS
+      header (probed 2026-08-13).
   - id: dnssec
     conforms: false
-    evidence: laurence.com is not DNSSEC-signed (probed 2026-07-19).
+    evidence: laurence.com is not DNSSEC-signed (probed 2026-08-13).
   - id: caa
     conforms: false
     evidence: No CAA records published for laurence.com.
@@ -65,8 +80,10 @@ standards:
     conforms: true
     evidence: laurence.com publishes an SPF record.
   - id: dmarc
-    conforms: false
-    evidence: No DMARC record published for laurence.com.
+    conforms: true
+    evidence: >-
+      laurence.com now publishes a DMARC record with policy p=quarantine (probed 2026-08-13). This
+      is a change since 2026-07-19, when no DMARC record was published.
   - id: security-txt
     conforms: false
     evidence: /.well-known/security.txt returns HTTP 404 on www.laurence.com.
@@ -112,4 +129,5 @@ compliance_certifications:
   published: false
   evidence: >-
     No trust center, SOC 2, ISO 27001, PCI, HIPAA or FedRAMP claim found on laurence.com as of
-    2026-07-19 (probe-security-programs.py returned trust=none).
+    2026-08-13 (probe-security-programs.py returned vdp=none trust=none; /security, /trust and
+    trust.laurence.com all miss). No Compliance pointer is emitted for this provider.

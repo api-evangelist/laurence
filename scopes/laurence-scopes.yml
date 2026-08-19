@@ -1,4 +1,4 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
 source: >-
   https://www.laurence.com/.well-known/openid-configuration,
@@ -12,7 +12,7 @@ description: >-
   protected-resource metadata. Scopes are coarse-grained — authorization is enforced per Amazon Ads
   profile at call time rather than by finer-grained scopes.
 issuer: https://www.laurence.com
-resource: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+resource: https://mcp.laurence.com/mcp
 scopes:
   - name: openid
     standard: oidc
@@ -30,9 +30,12 @@ scopes:
       Amazon Advertising and Amazon Marketing Stream data for the Ads profiles the signed-in user
       belongs to. This is the only scope listed in scopes_supported on the MCP protected-resource
       metadata.
-    resource: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+    resource: https://mcp.laurence.com/mcp
 notes:
   - No scope-to-tool mapping is published; laurence:mcp appears to gate the whole tool surface.
   - >-
     Per-record authorization is enforced by Amazon Ads profile membership, discoverable at runtime
     via the list_allowed_ads_profiles tool, not through scopes.
+  - >-
+    Re-probed 2026-08-13: the scope set is unchanged, but the protected resource the laurence:mcp
+    scope applies to moved from the modal.run deployment URL to https://mcp.laurence.com/mcp.

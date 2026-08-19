@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, api.github.com/orgs/Laurence-AI,
+  https://www.laurence.com/blog/laurence-mcp-launch
+description: >-
+  Laurence publishes no first-party client library on any public package registry. Its only
+  programmatic surface is a remote, OAuth-protected MCP server reached over HTTP, which needs no
+  client package — the documented Claude Code and Codex install paths are native remote-MCP
+  registrations, and the Cursor path shells out to mcp-remote, a third-party stdio-to-HTTP bridge
+  Laurence does not author. This is a recorded absence, not an unchecked field.
+package_count: 0
+packages: []
+searched:
+  - registry: npm
+    queries:
+      - name: laurence
+        status: 200
+        first_party: false
+        version: 1.0.0
+        published: null
+        note: >-
+          Name is taken by an unrelated package — "a simple cache for offline development" by
+          salemhilal, repo github.com/salemhilal/laurence. Not Laurence the company.
+      - name: '@laurence/sdk'
+        status: 404
+      - name: laurence-mcp
+        status: 404
+      - name: '@laurence-ai/mcp'
+        status: 404
+      - name: ask-laurence
+        status: 404
+  - registry: pypi
+    queries:
+      - name: laurence
+        status: 404
+      - name: laurence-mcp
+        status: 404
+      - name: ask-laurence
+        status: 404
+  - registry: github
+    queries:
+      - name: Laurence-AI
+        url: https://github.com/Laurence-AI
+        status: 200
+        public_repos: 0
+        note: >-
+          A real first-party GitHub organization (org blog field is laurence.com, created
+          2026-01-02) but it publishes zero public repositories, so there is no source-code or
+          release surface to catalogue.
+third_party_dependencies:
+  - name: mcp-remote
+    registry: npm
+    url: https://www.npmjs.com/package/mcp-remote
+    official: false
+    role: >-
+      Named in Laurence's own Cursor install snippet (npx -y mcp-remote <endpoint>) as the bridge
+      that lets a stdio-only MCP client reach the remote HTTP server. Authored by the wider MCP
+      community, not by Laurence.
+notes:
+  - >-
+    Absence of an SDK is not a gap for this provider in the usual sense — a remote MCP server is
+    consumed by an agent host directly. It does mean there is no versioned, dated release artifact
+    for Laurence anywhere, so there is no registry-published decay signal available for this company.
+  - No Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist or crates.io surface was expected or found.

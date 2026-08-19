@@ -1,0 +1,50 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.laurence.com/, https://www.laurence.com/sitemap.xml,
+  https://www.laurence.com/audit, https://www.laurence.com/demo,
+  https://www.laurence.com/get-started
+description: >-
+  Laurence publishes no pricing page and no plan tiers. The public site sells a managed service, not
+  a metered product: every call to action routes to a lead form rather than to a price. The site
+  navigation (Platform / Methodology / Customers / Log in / Get started free) contains no pricing
+  entry, and /pricing returns HTTP 404. The full sitemap — 39 URLs — contains no pricing, plans or
+  billing page of any kind. The MCP server, the only programmatic surface, is described as
+  "available to all Laurence customers" with no separate price, quota or metering documented.
+  plan_count is zero as a measured fact, not as an omission.
+plan_count: 0
+plans: []
+commercial_model:
+  type: sales-led
+  detail: >-
+    Two entry points, both lead-capture forms: a free Amazon account audit (/audit) and a
+    "Speak with Our Engineers" demo request (/demo). The /audit form's secondary CTA is
+    "Ready to go live? Start your free pilot" (/pilot), so the documented path to becoming a
+    customer is audit -> pilot -> managed engagement. No self-serve checkout, no card capture, no
+    published rate.
+  free_tier: false
+  free_trial:
+    offered: true
+    name: Free Amazon account audit / free pilot
+    url: https://www.laurence.com/audit
+    detail: >-
+      A free account audit and a free pilot are advertised, but neither is a self-serve product
+      trial — both require submitting name, company, phone and email to a sales form.
+  api_pricing:
+    published: false
+    detail: >-
+      The MCP server carries no separate pricing. Access is a customer entitlement gated by OAuth
+      scope laurence:mcp and by Amazon Ads profile membership.
+evidence:
+  - url: https://www.laurence.com/pricing
+    status: 404
+  - url: https://www.laurence.com/sitemap.xml
+    status: 200
+    note: 39 URLs, none pricing-related.
+  - url: https://www.laurence.com/audit
+    status: 200
+    note: Lead form; no price.
+  - url: https://www.laurence.com/demo
+    status: 200
+    note: Lead form; no price.
+checked: '2026-08-13'

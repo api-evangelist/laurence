@@ -1,18 +1,21 @@
 # Laurence
 
-> The only platform that automates Amazon management for brands, engineered to maximize profits after margin and ad spend. Built by engineers, quants, and researchers from Google, Meta, and top quantitative hedge funds. Laurence advertises like modern hedge funds trade markets, driving a 15-40% improvement in net profit for Amazon brands within a month of onboarding.
+> The autonomous growth platform for Amazon brands, engineered to maximize profits after margin and ad spend. Built by engineers, quants, and researchers from Google, Meta, and top quantitative hedge funds. Laurence advertises like modern hedge funds trade markets, driving a 15-40% improvement in net profit for Amazon brands within a month of onboarding.
 
 ## Product
 
-- [How Laurence Works](https://www.laurence.com/how): The math behind hierarchical Bayesian bid optimization — how Laurence shares statistical strength across keywords, products, and stores to maximise contribution margin rather than rules-of-thumb ACOS targets.
+- [Methodology](https://www.laurence.com/methodology): How Laurence prices every click — conversion rates statistically modeled per search term and placement, grounded in each product's true margins.
+- [Autonomously run ads](https://www.laurence.com/ads): Campaigns that run themselves — you provide COGS and goals, Laurence calculates margins, reprices every keyword hourly, and manages budgets, discovery, and brand defense.
+- [Brand intelligence](https://www.laurence.com/intelligence): The whole Amazon business explained — questions answered in plain English, campaigns and keywords made legible, consistent reporting.
+- [How Laurence Works](https://www.laurence.com/how-it-works): The math behind hierarchical Bayesian bid optimization — how Laurence shares statistical strength across keywords, products, and stores to maximise contribution margin rather than rules-of-thumb ACOS targets.
 - [Why Laurence](https://www.laurence.com/why): Why rule-based PPC tools and offshore-agency playbooks break at scale, and why a quantitative system delivers structurally different results.
 
 ## Case Studies
 
-- [Quadrupling a household brand's sales in five months — at ~14% TACoS](https://www.laurence.com/case-studies/household-supplies-brand): A scaling-stage household-essentials brand had the demand to grow but no way to know how hard it could safely push. Laurence found the profitable headroom and kept finding it — quadrupling total store revenue over five months while holding TACoS near 14%.
+- [Trading a target ROAS for contribution margin to quadruple a household brand's sales](https://www.laurence.com/case-studies/household-supplies-brand): A scaling-stage household-essentials brand wanted to grow aggressively without losing money, but a target ROAS couldn't tell it how far was too far. Laurence replaced the ROAS target with the brand's true contribution margin on Amazon, turned it into a TACoS guardrail, and scaled spend right up to that line — quadrupling total store revenue over five months while holding TACoS near 14%.
+- [Skyrocketing Naturealm's BSR in a saturated category](https://www.laurence.com/case-studies/naturealm-sacred-7): Sacred 7's Best Seller Rank had been stalling between #40 and #50 for months. Laurence strategically gained market share in a saturated category: eight weeks of intelligent bidding built around Prime Day took the product to #12, much closer to its fair market share.
 - [Reversing a four-month sales decline in two weeks](https://www.laurence.com/case-studies/cleaning-repairs-brand): An established cleaning & repair brand had watched sales fall for four months straight, dragging organic rank down with them. Laurence reversed the decline in two weeks — +50% total sales under 15% TACoS — by finding thousands of untargeted keywords and pricing each one.
 - [Lifting ROAS from 2.2× to 5.8× while sales doubled](https://www.laurence.com/case-studies/photo-video-supplies-brand): A photo & video gear brand was being outspent in a saturated category. Laurence cut waste on unwinnable head terms and expanded coverage from 30 to 407 keywords — lifting ROAS from 2.2× to 5.8× while doubling sales, all under 20% TACoS.
-- [Skyrocketing Naturealm's BSR in a saturated category](https://www.laurence.com/case-studies/naturealm-sacred-7): Sacred 7's Best Seller Rank had been stalling between #40 and #50 for months. Laurence's bid exploration found the cheap converting auctions competitors ignore, and eight weeks of intelligent bidding built around Prime Day took the product to #12, much closer to its fair share of the category.
 
 ## Blog
 

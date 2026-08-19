@@ -1,13 +1,17 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
 description: >-
-  Results of probing the /.well-known/ discovery surface for every base host in apis.yml. Status is
-  the HTTP code observed at fetch time on 2026-07-19. laurence.com 308-redirects to www.laurence.com;
-  both serve identical documents. Only documents returning a real, correctly-typed payload were
-  saved. Notably, laurence.com publishes OAuth 2.0 authorization-server and OpenID Connect discovery
-  metadata for its MCP server, and the MCP host itself publishes RFC 9728 protected-resource
-  metadata. /.well-known/jwks.json is advertised by the discovery document but currently returns
-  HTTP 503 with an error body, so it was not saved.
+  Results of probing the /.well-known/ discovery surface for every host associated with Laurence.
+  Status is the HTTP code observed at fetch time on 2026-08-13. laurence.com 308-redirects to
+  www.laurence.com; both serve identical documents. Only documents returning a real, correctly-typed
+  payload were saved. www.laurence.com publishes OAuth 2.0 authorization-server and OpenID Connect
+  discovery metadata for its MCP server, and the MCP host publishes RFC 9728 protected-resource
+  metadata. CHANGE SINCE 2026-07-19: the protected-resource document now declares the resource as
+  https://mcp.laurence.com/mcp — a first-party branded host — rather than the modal.run deployment
+  URL still published in the launch blog post. Both hosts serve the same document and both return an
+  identical 401 Bearer challenge, and the challenge itself now points at mcp.laurence.com.
+  /.well-known/jwks.json is advertised by the discovery documents but still returns HTTP 503 with an
+  error body, so it was not saved.
 hosts:
   - host: https://www.laurence.com
     documents:
@@ -24,21 +28,54 @@ hosts:
       - path: /.well-known/jwks.json
         status: 503
         note: >-
-          Advertised as jwks_uri by the discovery documents but returns
+          Advertised as jwks_uri by both discovery documents but returns
           {"error":"server_error","error_description":"key is not a public key"}. Not saved.
+          Unchanged since 2026-07-19 — a persistent defect, not a transient outage.
       - path: /.well-known/api-catalog
         status: 404
+        note: SPA catch-all returns an HTML shell with a 404 status. Not a document.
       - path: /.well-known/ai-plugin.json
+        status: 404
+        note: SPA catch-all returns an HTML shell with a 404 status. Not a document.
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
         status: 404
       - path: /llms.txt
         status: 200
         type: text/markdown
         file: ../llms/laurence-llms.txt
-  - host: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run
+  - host: https://mcp.laurence.com
+    note: >-
+      First-party branded MCP host. Named as the canonical resource by the protected-resource
+      metadata and by the WWW-Authenticate challenge on an unauthenticated call.
     documents:
       - path: /.well-known/oauth-protected-resource
         status: 200
         type: application/json
         file: laurence-oauth-protected-resource.json
+      - path: /.well-known/oauth-protected-resource/mcp
+        status: 200
+        type: application/json
+        note: Byte-identical to the path above; this is the URL named in the 401 challenge.
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /openapi.json
+        status: 404
+  - host: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run
+    note: >-
+      The Modal deployment URL published in the launch blog post. Still live and serving the same
+      MCP endpoint, but its own protected-resource metadata now points at mcp.laurence.com.
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        type: application/json
+        note: Byte-identical to the mcp.laurence.com document; declares resource mcp.laurence.com/mcp.
       - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
         status: 404

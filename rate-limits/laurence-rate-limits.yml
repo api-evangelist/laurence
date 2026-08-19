@@ -1,0 +1,46 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.laurence.com/blog/laurence-mcp-launch,
+  https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp,
+  live unauthenticated probes of https://mcp.laurence.com/mcp on 2026-08-13
+description: >-
+  Laurence documents no rate limits for its MCP server, and none could be observed. The launch post
+  — the only published document describing the server — covers install, auth and the tool table but
+  says nothing about quotas, throttling or backoff. The endpoint is OAuth-gated, so an
+  unauthenticated probe cannot reach a rate-limited code path: every request returns 401 before any
+  limit would apply, and the 401 response carries no RateLimit-*, X-RateLimit-* or Retry-After
+  header. An agent calling this server therefore has no runtime signal to pace against and no
+  documented number to plan against. limit_count is zero as a measured fact.
+limit_count: 0
+limits: []
+response_headers:
+  observed: []
+  detail: >-
+    Headers on the unauthenticated 401 from https://mcp.laurence.com/mcp on 2026-08-13 were:
+    date, content-type, content-length, alt-svc, modal-function-call-id, vary, www-authenticate,
+    cf-cache-status, nel, report-to, server, cf-ray. No rate-limit family header of any kind.
+  standard_ratelimit_headers: false
+  x_ratelimit_headers: false
+  retry_after: false
+exhaustion_status: unknown
+notes:
+  - >-
+    modal-function-call-id is a per-invocation trace identifier emitted by the Modal serverless
+    platform the server runs on. It is a request-correlation value, not a rate-limit signal, and it
+    is not documented by Laurence.
+  - >-
+    The one implicit throughput control the docs do describe is a per-tool row "limit" parameter on
+    get_bids_and_observations, get_ams_events and get_search_term_data — a result-size cap, not a
+    request-rate limit. See conventions/laurence-conventions.yml.
+  - >-
+    Any upstream Amazon Advertising API quota that constrains Laurence's own ingestion is not
+    surfaced to MCP callers and is not documented here, since Laurence publishes nothing about it.
+evidence:
+  - url: https://mcp.laurence.com/mcp
+    status: 401
+    note: POST tools/list, unauthenticated. No rate-limit headers present.
+  - url: https://www.laurence.com/blog/laurence-mcp-launch
+    status: 200
+    note: Full text read; no mention of limits, quotas, throttling or backoff.
+checked: '2026-08-13'

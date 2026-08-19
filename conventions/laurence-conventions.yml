@@ -1,4 +1,4 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
 source: >-
   https://www.laurence.com/blog/laurence-mcp-launch,
@@ -95,15 +95,34 @@ deprecation:
   detail: No deprecation or Sunset policy is published.
 rate_limits:
   documented: false
-  detail: No rate limits are published for the MCP server.
+  detail: >-
+    No rate limits are published for the MCP server, and the unauthenticated 401 carries no
+    RateLimit-*, X-RateLimit-* or Retry-After header (probed 2026-08-13). See
+    rate-limits/laurence-rate-limits.yml.
 status_page:
   published: false
-  detail: No status page found at /status or on a third-party status host as of 2026-07-19.
+  detail: >-
+    No status page. www.laurence.com/status returns 404 and status.laurence.com does not resolve
+    (probed 2026-08-13). See lifecycle/laurence-lifecycle.yml.
 request_tracing:
   documented: false
-  detail: No request-id or correlation-id convention is documented.
+  detail: >-
+    No request-id or correlation-id convention is documented. Responses do carry a
+    modal-function-call-id header, but that is emitted by the Modal serverless platform the server
+    runs on, not by Laurence, and it is not documented as a support-traceable identifier.
+endpoint:
+  canonical: https://mcp.laurence.com/mcp
+  documented: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+  detail: >-
+    Re-probed 2026-08-13. The server's RFC 9728 protected-resource metadata and its 401 challenge
+    now name the branded host mcp.laurence.com as the resource; the launch post still publishes the
+    modal.run URL in all three install commands. Both hosts are live and behave identically.
 cross_references:
   authentication: authentication/laurence-authentication.yml
+  errors: errors/laurence-problem-types.yml
+  rate_limits: rate-limits/laurence-rate-limits.yml
+  lifecycle: lifecycle/laurence-lifecycle.yml
+  skills: skills/_index.yml
   scopes: scopes/laurence-scopes.yml
   conformance: conformance/laurence-conformance.yml
   mcp: mcp/laurence-mcp.yml

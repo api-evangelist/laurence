@@ -1,1 +1,1 @@
-{"resource":"https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp","authorization_servers":["https://www.laurence.com"],"scopes_supported":["laurence:mcp"],"bearer_methods_supported":["header"],"resource_name":"Laurence MCP"}
+{"resource":"https://mcp.laurence.com/mcp","authorization_servers":["https://www.laurence.com"],"scopes_supported":["laurence:mcp"],"bearer_methods_supported":["header"],"resource_name":"Laurence MCP"}

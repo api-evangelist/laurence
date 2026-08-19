@@ -1,0 +1,78 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.laurence.com/sitemap.xml, https://www.laurence.com/blog/laurence-mcp-launch,
+  live probes of laurence.com and status.laurence.com on 2026-08-13
+description: >-
+  Laurence publishes no versioning policy, no deprecation policy, no SLA and no status page for its
+  MCP server. This file records those absences with the probe that established each one, so the gap
+  is legible rather than inferred. There is one live change Laurence has NOT documented anywhere: the
+  MCP server's canonical resource moved from the modal.run deployment URL to the branded host
+  mcp.laurence.com, and the launch post still publishes the old URL in every install command. Both
+  hosts answer today, so nothing is broken, but the change was shipped without a changelog entry or
+  a note on the post — which is exactly the class of drift a versioning policy exists to make visible.
+versioning:
+  scheme: none-published
+  current: null
+  documented: false
+  detail: >-
+    No API version, no version header, no dated version train. MCP protocol version is negotiated
+    per-session by the initialize handshake, which is a protocol mechanic rather than a Laurence
+    versioning policy.
+deprecation:
+  policy_url: null
+  documented: false
+  sunset_header: false
+  detail: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support documented or observed.
+    The modal.run endpoint is being superseded in the metadata without any deprecation signal.
+sla:
+  url: null
+  published: false
+  uptime_target: null
+status_page:
+  published: false
+  probes:
+    - url: https://www.laurence.com/status
+      status: 404
+    - url: https://status.laurence.com
+      status: 000
+      note: DNS does not resolve.
+changelog:
+  published: false
+  detail: >-
+    No changelog, release-notes or "what's new" page. /changelog returns 404 and the sitemap
+    contains no such URL. The blog (4 posts, most recent 2026-06-03) carries announcements but is
+    editorial, not a dated change record — no artifact is emitted for it.
+  probes:
+    - url: https://www.laurence.com/changelog
+      status: 404
+deprecated_operations: []
+observed_changes:
+  - date: '2026-08-13'
+    kind: endpoint-migration
+    detail: >-
+      RFC 9728 protected-resource metadata on both hosts now declares
+      resource: https://mcp.laurence.com/mcp, and the WWW-Authenticate challenge on an
+      unauthenticated call points at https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp.
+      On 2026-07-19 the same document declared the modal.run URL. Undocumented by the provider.
+    old: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+    new: https://mcp.laurence.com/mcp
+    both_live: true
+  - date: '2026-08-13'
+    kind: docs-drift
+    detail: >-
+      https://www.laurence.com/blog/laurence-mcp-launch still publishes the modal.run URL in all
+      three install commands (Claude Code, Cursor, Codex) after the migration above.
+  - date: '2026-08-13'
+    kind: content-refresh
+    detail: >-
+      /llms.txt was rewritten between 2026-07-19 and 2026-08-13 — new product pages (/methodology,
+      /ads, /intelligence) replaced /how, and the site tagline changed from "The only platform that
+      automates Amazon management for brands" to "The autonomous growth platform for Amazon brands".
+      The verbatim copy in llms/laurence-llms.txt was refreshed.
+cross_references:
+  mcp: mcp/laurence-mcp.yml
+  conventions: conventions/laurence-conventions.yml
+  well_known: well-known/laurence-well-known.yml
+checked: '2026-08-13'

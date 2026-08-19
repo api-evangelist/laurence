@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  https://www.laurence.com/blog/laurence-mcp-launch — every tool name, parameter name and semantic
+  used below is taken from the provider's own published Tools table and surrounding prose; live
+  probes 2026-08-13 for the auth handshake and error shapes.
+description: >-
+  Packaged Agent Skills for the Laurence MCP server. Laurence publishes no OpenAPI, so these skills
+  are grounded in the nine MCP tool names the provider publishes rather than in operationIds. No
+  tool, parameter or behavior below was invented: where the input schema is unknown (tools/list is
+  OAuth-gated and could not be introspected), the skill instructs the agent to work from what the
+  server returns rather than assuming a shape. Because the surface is entirely read-only, every skill
+  is a diagnosis/reporting flow — none of them can mutate an ad account, and each says so explicitly.
+grounding:
+  spec: none
+  tool_source: https://www.laurence.com/blog/laurence-mcp-launch
+  tools_verified_live: false
+  note: >-
+    tools/list returns HTTP 401 without OAuth, so per-tool inputSchema could not be verified.
+    Parameter names used in these skills (profile_id, campaign_ids, keyword_id, match_type,
+    placement, interval, limit, asin) are the ones Laurence names in the launch post.
+skills:
+  - file: laurence-connect-and-scope.md
+    name: Connect to Laurence MCP and resolve your Amazon Ads scope
+    api: mcp/laurence-mcp.yml
+    operations:
+      - list_allowed_ads_profiles
+    note: Prerequisite for the other two.
+  - file: laurence-find-wasted-spend.md
+    name: Find wasted Amazon Ads spend from search terms and negatives
+    api: mcp/laurence-mcp.yml
+    operations:
+      - list_allowed_ads_profiles
+      - get_campaigns
+      - get_search_term_data
+      - get_campaign_keywords
+      - get_campaign_negative_keywords
+      - get_daily_sales
+  - file: laurence-hourly-stream-diagnosis.md
+    name: Diagnose hourly Amazon Marketing Stream performance and bid moves
+    api: mcp/laurence-mcp.yml
+    operations:
+      - list_allowed_ads_profiles
+      - get_campaigns
+      - get_ad_groups
+      - get_ams_events
+      - get_bids_and_observations
+      - get_campaign_keywords
+tools_covered:
+  - list_allowed_ads_profiles
+  - get_daily_sales
+  - get_campaigns
+  - get_ad_groups
+  - get_campaign_keywords
+  - get_campaign_negative_keywords
+  - get_bids_and_observations
+  - get_ams_events
+  - get_search_term_data
+coverage: 9 of 9 published tools appear in at least one skill.

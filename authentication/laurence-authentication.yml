@@ -1,4 +1,4 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
 source: >-
   https://www.laurence.com/.well-known/openid-configuration,
@@ -46,6 +46,7 @@ schemes:
       - email
       - laurence:mcp
     applies_to:
+      - https://mcp.laurence.com/mcp
       - https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
 authorization_model:
   tenancy: >-
@@ -55,8 +56,13 @@ authorization_model:
   access: Laurence customers only
   read_only: true
 observed:
-  probed: '2026-07-19'
+  probed: '2026-08-13'
   unauthenticated_request_status: 401
   challenge: >-
     WWW-Authenticate: Bearer error="invalid_token", error_description="Authentication required",
-    resource_metadata="https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/.well-known/oauth-protected-resource/mcp"
+    resource_metadata="https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp"
+  change_since_2026_07_19: >-
+    The protected-resource metadata and the 401 challenge now name the first-party branded host
+    https://mcp.laurence.com/mcp as the resource, replacing the modal.run deployment URL. The
+    OAuth authorization server, endpoints, scopes and PKCE requirements are unchanged. The
+    advertised jwks_uri still returns HTTP 503, so ID-token signatures remain unverifiable.
