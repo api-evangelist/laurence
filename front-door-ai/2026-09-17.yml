@@ -1,0 +1,27 @@
+# Front Door AI Index — laurence — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: laurence
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.laurence.com
+  final_host: www.laurence.com
+  ownership: own
+  owner: laurence
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 2
+  host_score: 2
+  density: 1.65
+  words: 1210
+  tiers:
+    agentic: 1
+    core: 1
+    model: 0
+  ambiguous: 2
+  top_terms:
+    agent: 2
+    AI: 1
+    MCP: 1

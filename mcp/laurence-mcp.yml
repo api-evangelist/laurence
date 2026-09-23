@@ -17,11 +17,10 @@ server:
   url: https://mcp.laurence.com/mcp
   aliases:
   - url: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
-    note: >-
-      The Modal deployment URL published in the launch blog post and in every documented install
-      command. Still live on 2026-08-13 and returns an identical 401 Bearer challenge, but its own
-      RFC 9728 protected-resource metadata declares the resource as https://mcp.laurence.com/mcp.
-      The docs have not been updated to the branded host.
+    note: The Modal deployment URL published in the launch blog post and in every documented install command.
+      Still live on 2026-08-13 and returns an identical 401 Bearer challenge, but its own RFC 9728 protected-resource
+      metadata declares the resource as https://mcp.laurence.com/mcp. The docs have not been updated to
+      the branded host.
   auth: oauth2
   protected_resource: well-known/laurence-oauth-protected-resource.json
   authorization_server: https://www.laurence.com
@@ -38,25 +37,25 @@ verification:
   www_authenticate: Bearer error="invalid_token", error_description="Authentication required", resource_metadata="https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp"
   tools_verified_live: false
   tools_source: https://www.laurence.com/blog/laurence-mcp-launch
-  note: >-
-    tools/list is OAuth-gated on both hosts, so per-tool inputSchema could not be introspected. The
-    tool names and descriptions below are the provider's own published Tools table; parameter names
-    are those the post names in prose. Authenticated introspection would be required to capture the
-    real JSON Schemas.
+  note: tools/list is OAuth-gated on both hosts, so per-tool inputSchema could not be introspected. The
+    tool names and descriptions below are the provider's own published Tools table; parameter names are
+    those the post names in prose. Authenticated introspection would be required to capture the real JSON
+    Schemas.
 install:
 - client: claude-code
   command: claude mcp add --transport http laurence https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
 - client: codex
   command: codex mcp add laurence --url https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
 - client: codex
-  config: |
-    [mcp_servers.laurence]
+  config: '[mcp_servers.laurence]
+
     url = "https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp"
+
+    '
   login: codex mcp login laurence --scopes laurence:mcp
 - client: cursor
   config: '{"laurence":{"command":"npx","args":["-y","mcp-remote","https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp"]}}'
-  note: >-
-    mcp-remote is a third-party stdio-to-HTTP bridge, not a Laurence package. Laurence publishes no
+  note: mcp-remote is a third-party stdio-to-HTTP bridge, not a Laurence package. Laurence publishes no
     package of its own on any registry — see packages/laurence-packages.yml.
 tools:
 - name: list_allowed_ads_profiles
@@ -94,12 +93,8 @@ notes:
   and Laurence publishes no OpenAPI to bind against.
 deployment:
   mode: remote
-  endpoint: https://mcp.laurence.com/mcp
-  auth: oauth
+  endpoint: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
   verified: probed
   probe: gated
-  probe_status: 401
-  checked: '2026-08-13'
-  note: >-
-    Remote only. No stdio package exists — the Cursor install path shells out to the third-party
-    mcp-remote bridge rather than to a Laurence-published npm or PyPI package.
+  checked: '2026-08-12'
+  source: catalog MCP census
