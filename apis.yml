@@ -52,7 +52,7 @@ tags:
 - Amazon
 - E-Commerce
 - Marketing
-- Machine-Learning
+- Machine Learning
 - Retail Media
 - MCP
 tags_raw:
@@ -64,6 +64,7 @@ tags_raw:
 - Machine Learning
 - Retail Media
 - MCP
+- Machine-Learning
 apis:
 - aid: laurence:mcp
   name: Laurence MCP

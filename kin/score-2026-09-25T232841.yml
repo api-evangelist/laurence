@@ -1,21 +1,19 @@
-# Kin Score artifact — laurence — 2026-08-27T103455
+# Kin Score artifact — laurence — 2026-09-25T232841
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: laurence
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T103455
-  composite: 24.1
+  schema_version: 0.23.0
+  scored_at: '2026-09-25'
+  run_ts: 2026-09-25T232841
+  composite: 25.4
   band: emerging
   facets:
-    discoverability: 87.0
+    discoverability: 75.0
     contract_quality: 0.0
-    governance: 18.2
+    contract_governance: 18.2
     operational_transparency: 2.6
     developer_ergonomics: 30.4
-    commercial_clarity: 34.2
-    contract_governance: 18.2
     access_clarity: 34.2
   agent_readiness:
     score: 33.6
@@ -40,6 +38,12 @@ kin_score:
       protected_resource_metadata: verified
       dynamic_client_registration: true
       agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Horizontal (data, software, accessibility, platform)
+    regime_id: horizontal
+    score: 31.8
+    matched_via: fallback
   provenance:
     mcp: first-party
     skills: derived
