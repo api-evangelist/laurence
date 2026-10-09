@@ -98,3 +98,19 @@ deployment:
   probe: gated
   checked: '2026-08-12'
   source: catalog MCP census
+rfc9728:
+  endpoint: https://laurence-ai-68564--ask-laurence-agent-mcp-server.modal.run/mcp
+  metadata_url: https://mcp.laurence.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.laurence.com/mcp
+    authorization_servers:
+    - https://www.laurence.com
+    scopes_supported:
+    - laurence:mcp
+    bearer_methods_supported:
+    - header
+    resource_name: Laurence MCP
