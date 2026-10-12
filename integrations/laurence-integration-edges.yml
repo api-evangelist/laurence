@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/laurence/integrations
+- https://n8n.io/integrations/laurence/
+- https://composio.dev/toolkits/laurence
+- https://monid.ai/tools/laurence
+checked:
+- https://composio.dev/toolkits/laurence
+- https://monid.ai/tools/laurence
+- https://n8n.io/integrations/laurence/
+- https://zapier.com/apps/laurence/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
