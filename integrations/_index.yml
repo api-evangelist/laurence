@@ -33,3 +33,15 @@
     status: Active
   status: not-a-workflow
   arazzo: null
+- slug: laurence-amazon-selling-partner-appstore
+  label: Amazon Selling Partner Appstore
+  partner: amazon-seller-central
+  partner_name: Amazon Selling Partner Appstore
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.eade9712-3638-4e8f-b2d2-34f1000296de
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
